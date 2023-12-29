@@ -1,0 +1,1 @@
+//Different pages will have their main files here and components in components folder.

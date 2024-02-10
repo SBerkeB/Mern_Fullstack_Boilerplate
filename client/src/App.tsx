@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import { GlobalStyles } from "./global/GlobalStyles"
 import { QueryClient, QueryClientProvider } from "react-query"
-import { Users } from "./components/Users"
 import { Header } from "./components/Header"
+import { EntryPage } from "./routes/EntryPage"
 
 
 
@@ -21,7 +21,7 @@ export const App: React.FC = () => {
       <GlobalStyles/>
       <Header title="MERN Stack with Typescript + Vite"/>
       <QueryClientProvider client={queryClient}>
-        <Users />
+        <EntryPage />
       </QueryClientProvider>
     </AppStyled>
   )

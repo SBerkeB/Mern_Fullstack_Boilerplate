@@ -1,16 +1,22 @@
 import { useQuery } from "react-query";
 import axios from "axios"
 import { User } from "../interfaces/User"
-import { Card } from "./Card";
+import { Card } from "../components/Card";
 import styled from 'styled-components';
 import { FaDatabase } from 'react-icons/fa'
+import { useNavigate } from "react-router-dom";
+import { Header } from "../components/Header"
 
 export const Users: React.FC = () => {
 
   const getUsers = async () => await axios.get("http://localhost:3001/users").then(res => res.data);
 
   const { data: users, isLoading, isError, refetch } = useQuery(['users'], getUsers);
-  console.log(typeof users)
+
+  const navigate = useNavigate();
+  const newUserRedirect = async() => {
+    navigate('/main');
+  }
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -22,6 +28,8 @@ export const Users: React.FC = () => {
 
   return (
     <>
+      <Header title="MERN Stack with Typescript + Vite"/>
+      <ButtonStyled onClick={() => newUserRedirect()}><FaDatabase/> Home </ButtonStyled>
       <ButtonStyled onClick={() => refetch()}><FaDatabase/> Refresh Database</ButtonStyled>
       <UsersContainer>
         {Array.isArray(users) && users.map((user: User, key: number) => <Card user={user} key={key}/>)}

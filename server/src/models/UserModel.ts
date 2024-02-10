@@ -3,6 +3,7 @@ interface UserModel {
   lastName: string;
   userName: string;
   emailAddress: string;
+  password: string;
 }
 
 export default UserModel;

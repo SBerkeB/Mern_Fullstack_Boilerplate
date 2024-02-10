@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express"
-import { getAllUsers, createUser } from "../controllers/UserController";
+import { getAllUsers, createUser } from "../controllers/UserControllers";
 import UserModel from "../models/UserModel";
 import { Collection } from "mongodb";
 

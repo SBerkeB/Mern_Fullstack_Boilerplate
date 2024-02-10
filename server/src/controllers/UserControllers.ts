@@ -21,7 +21,7 @@ export const createUser = (usersCollection: Collection<UserModel>) =>
     const user = req.body;
     try {
       const result = await usersCollection.insertOne(user);
-      res.json((result as any).ops[0]);
+      res.json((result as any).acknowledged);
     } catch (err) {
       res.json(err);
     }

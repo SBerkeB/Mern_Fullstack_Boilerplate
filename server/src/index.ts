@@ -37,9 +37,11 @@
 import express, {Request, Response} from "express";
 import cors from "cors";
 import { UserRouter } from "./routes/UserRouter";
+import { AuthRouter } from "./routes/AuthRouter";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import path from "path";
+
 
 const app: express.Application = express();
 
@@ -57,9 +59,15 @@ if (!DB_URL) {
 
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  maxAge: 600
+}));
 
 app.use("/users", UserRouter);
+app.use("/auth", AuthRouter)
 
 
 const PORT = process.env.PORT || 3001;

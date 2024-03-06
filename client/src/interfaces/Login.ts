@@ -1,5 +1,4 @@
 export interface UserLogin {
-    userName: string | undefined;
-    emailAddress: string | undefined;
+    identifier: string | undefined;
     password: string;
 }

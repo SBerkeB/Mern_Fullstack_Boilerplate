@@ -10,14 +10,6 @@ export const registerUser = (usersCollection: Collection<UserModel>) =>
         const user = req.body;
         try {
             const result = await usersCollection.insertOne(user);
-            //console.log(result.acknowledged); 
-
-            // res.status(201).send({
-            //     message: "User Created Successfully",
-            //     result: result.acknowledged,
-            // });
-
-            //res.json((result as any).acknowledged);
             
             return {
                 message: "User Created Successfully",
@@ -35,7 +27,7 @@ export const loginUser = (usersCollection: Collection<UserModel>) =>
     async (req: Request, res: Response): Promise<ResponseModel> => {
         const user = req.body;
         try {
-            const result = await usersCollection.findOne({emailAddress: user.emailAddress});
+            const result = await usersCollection.findOne({emailAddress: user.identifier});
             if (result) {
                 console.log(result);
                 return {
@@ -43,10 +35,19 @@ export const loginUser = (usersCollection: Collection<UserModel>) =>
                     result: result,
                 };
             } else {
-                return {
+                const tryUsername = await usersCollection.findOne({username: user.identifier});
+
+                if (tryUsername) {
+                    return {
+                        message: "User Found",
+                        result: tryUsername,
+                    };
+                } else {
+                    return {
                     message: "User Not Found",
                     result: result,
-                };
+                    };
+                }
             }
         } catch (err) {
             return {

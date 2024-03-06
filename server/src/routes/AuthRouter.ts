@@ -22,21 +22,21 @@ AuthRouter.post("/register", async (req: Request, res: Response) => {
         req.body.password = hashedPassword;
         //Adding user to the database
         await registerUser(usersCollection)(req, res).then((result) => {
-            res.status(201).send({
+            res.json({
                 message: "Success",
                 result,
             });
         })
         //Database error handling
         .catch((error) => {
-          res.status(500).send({
+          res.status(201).send({
             message: error.message || "Some error occurred while creating the User.",
             error,
           });
         });
       }).catch((error: any) => {
         //Hash error handling
-        res.status(500).send({
+        res.status(400).send({
           message: error.message || "Some error occurred while creating the User.",
           error,
         });
@@ -46,9 +46,12 @@ AuthRouter.post("/register", async (req: Request, res: Response) => {
 
 
 
-AuthRouter.get("/login", async (req: Request, res: Response) => {
+AuthRouter.post("/login", async (req: Request, res: Response) => {
+    
     const usersCollection: Collection<UserModel> = req.app.locals.usersCollection;
     const user = req.body;
+
+    console.log(user);
 
     //Finding the user in the database
     await loginUser(usersCollection)(req, res).then((result) => {
@@ -71,7 +74,7 @@ AuthRouter.get("/login", async (req: Request, res: Response) => {
                 });
 
             } else {
-                res.status(401).send({
+                res.status(400).send({
                     message: "Password does not match",
                     result: false,
                 });
@@ -79,23 +82,24 @@ AuthRouter.get("/login", async (req: Request, res: Response) => {
 
         })
         .catch((error: any) => {
-            res.status(401).send({
+            res.json({
                 message: error.message,
                 result: error,
             })
         });
         //Database error handling
     }).catch((error: any) => {
-        res.status(500).send({
+        res.status(404).send({
             message: error.message || "User Not Found",
             result: error,
         });
     });
+    console.log();
 });
 
 
-AuthRouter.get("/test", Authenticator, (req: Request, res: Response) => {
-    res.status(201).send({
-        message: "You are authenticated",
-    });
-});
+// AuthRouter.get("/test", Authenticator, (req: Request, res: Response) => {
+//     res.status(201).send({
+//         message: "You are authenticated",
+//     });
+// });

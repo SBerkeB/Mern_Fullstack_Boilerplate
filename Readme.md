@@ -45,3 +45,5 @@ This project currently lacks these important features:
 I am a learning - junior developer. So this project may have many faults. If you spot any problematic detail, please do inform me since I am learning Full Stack development with proper architecture and SOLID with this project.
 
 ### Any code inside any file can and must be revised by experienced developers. Please provide me any feedback you have.
+
+
